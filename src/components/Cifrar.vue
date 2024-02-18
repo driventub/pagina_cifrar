@@ -1,18 +1,24 @@
 <template>
-  <div>
+  <div class="flex justify-center text-center">
+
+    <div class="grid  ">
+
+      <h1 class="text-3xl my-5 ">Ingreso de Imagenes</h1>
+      <input  class="file-input w-full max-w-xs my-5" type="file" accept="image/*" @change="handleImageChange(1)">
+      <img class="h-96 w-96 my-5" v-if="img1Src" :src="img1Src" alt="Image 1">
+
+      <!-- Input for selecting the second image -->
+      <input class="file-input w-full max-w-xs my-5" type="file" accept="image/*" @change="handleImageChange(2)">
+      <img class="h-96 w-96" v-if="img2Src" :src="img2Src" alt="Image 2">
+
+      <!-- Button to apply the filter -->
+      <button class="btn btn-neutral" @click="applyFilter">Apply Filter</button>
+
+      <!-- Display the filtered image -->
+      <img class="h-96 w-96" v-if="filteredImgSrc" :src="filteredImgSrc" alt="Filtered Image">
+    </div>
     <!-- Input for selecting the first image -->
-    <input type="file" accept="image/*" @change="handleImageChange(1)">
-    <img v-if="img1Src" :src="img1Src" alt="Image 1">
 
-    <!-- Input for selecting the second image -->
-    <input type="file" accept="image/*" @change="handleImageChange(2)">
-    <img v-if="img2Src" :src="img2Src" alt="Image 2">
-
-    <!-- Button to apply the filter -->
-    <button @click="applyFilter">Apply Filter</button>
-
-    <!-- Display the filtered image -->
-    <img v-if="filteredImgSrc" :src="filteredImgSrc" alt="Filtered Image">
   </div>
 </template>
 
@@ -46,16 +52,22 @@ export default {
       const formData = new FormData();
       formData.append('img1', this.img1);
       formData.append('img2', this.img2);
-      
+
       try {
         const response = await axios.post('http://127.0.0.1:8000/uploadfile/', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
-          }
+          },
+          responseType: 'blob'
         });
+        console.log(response.data);
 
-        const blob = new Blob([response.data], { type: 'image/jpeg' });
-        this.filteredImgSrc = URL.createObjectURL(blob);
+
+
+        const imagenfilt = URL.createObjectURL(response.data);
+        console.log(imagenfilt);
+        this.filteredImgSrc = imagenfilt
+
       } catch (error) {
         console.error('Error applying filter:', error);
       }
