@@ -1,10 +1,12 @@
 <template>
   <div class="flex justify-center text-center">
+    <h1 class="text-3xl my-5 ">Ingreso de Imagenes</h1>
+  </div>
 
-    <div class="grid  ">
 
-      <h1 class="text-3xl my-5 ">Ingreso de Imagenes</h1>
-      <input  class="file-input w-full max-w-xs my-5" type="file" accept="image/*" @change="handleImageChange(1)">
+  <div class="flex justify-center text-center">
+    <div class="grid grid-cols-2">
+      <input class="file-input w-full max-w-xs my-5" type="file" accept="image/*" @change="handleImageChange(1)">
       <img class="h-96 w-96 my-5" v-if="img1Src" :src="img1Src" alt="Image 1">
 
       <!-- Input for selecting the second image -->
@@ -12,14 +14,21 @@
       <img class="h-96 w-96" v-if="img2Src" :src="img2Src" alt="Image 2">
 
       <!-- Button to apply the filter -->
-      <button class="btn btn-neutral" @click="applyFilter">Apply Filter</button>
 
-      <!-- Display the filtered image -->
-      <img class="h-96 w-96" v-if="filteredImgSrc" :src="filteredImgSrc" alt="Filtered Image">
     </div>
     <!-- Input for selecting the first image -->
 
   </div>
+  <div class="flex justify-center text-center">
+    <div class="grid">
+      <button class="btn btn-neutral mb-2" @click="applyFilter">Aplicar Cifrado</button>
+      <img class="h-96 w-96" v-if="filteredImgSrc" :src="filteredImgSrc" alt="Filtered Image">
+    </div>
+
+  </div>
+
+
+  <!-- Display the filtered image -->
 </template>
 
 <script>
