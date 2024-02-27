@@ -21,13 +21,19 @@
   </div>
   <div class="flex justify-center text-center">
     <div class="grid">
-      <button class="btn btn-neutral mb-2" @click="applyFilter">Aplicar Cifrado</button>
+      <button class="btn btn-neutral mb-2" v-if="!filteredImgSrc" @click="applyFilter">Aplicar Cifrado</button>
       <img class="h-96 w-96" v-if="filteredImgSrc" :src="filteredImgSrc" alt="Filtered Image">
+      <button class="btn btn-neutral mb-2" v-if="filteredImgSrc" @click="descifrar">Descifrar</button>
     </div>
 
   </div>
 
+  <div class="flex justify-center text-center">
+    <div class="grid">
+      <img class="h-96 w-96" v-if="descImgSrc" :src="descImgSrc" alt="Imagen Descifrada">
+    </div>
 
+  </div>
   <!-- Display the filtered image -->
 </template>
 
@@ -42,6 +48,7 @@ export default {
       img1Src: null,
       img2Src: null,
       filteredImgSrc: null,
+      descImgSrc: null,
     };
   },
   methods: {
@@ -80,7 +87,32 @@ export default {
       } catch (error) {
         console.error('Error applying filter:', error);
       }
+    },
+    async descifrar() {
+      const formData = new FormData();
+      formData.append('img1', this.img1);
+      formData.append('img2', this.img2);
+
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/descifrar/', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          responseType: 'blob'
+        });
+        console.log(response.data);
+
+
+
+        const imagenfilt = URL.createObjectURL(response.data);
+        console.log(imagenfilt);
+        this.descImgSrc = imagenfilt
+
+      } catch (error) {
+        console.error('Error applying filter:', error);
+      }
     }
+
   },
 };
 </script>
