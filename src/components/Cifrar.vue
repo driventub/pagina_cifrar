@@ -21,16 +21,24 @@
   </div>
   <div class="flex justify-center text-center">
     <div class="grid">
-      <button class="btn btn-neutral mb-2" v-if="!filteredImgSrc" @click="applyFilter">Aplicar Cifrado</button>
-      <img class="h-96 w-96" v-if="filteredImgSrc" :src="filteredImgSrc" alt="Filtered Image">
+      <button class="btn btn-neutral mb-2" v-if="!filteredImgSrc" @click="applyFilter">Aplicar Cifrado</button>      
       <button class="btn btn-neutral mb-2" v-if="filteredImgSrc" @click="descifrar">Descifrar</button>
     </div>
 
   </div>
 
   <div class="flex justify-center text-center">
-    <div class="grid">
-      <img class="h-96 w-96" v-if="descImgSrc" :src="descImgSrc" alt="Imagen Descifrada">
+    <div class="grid grid-cols-2">
+      <div>
+        <label v-if="filteredImgSrc" for="">Imagen Ocultada</label>
+        <img class="h-96 w-96" v-if="filteredImgSrc" :src="filteredImgSrc" alt="Filtered Image">
+      </div>
+
+      <div>
+        <label v-if="filteredImgSrc" for="">Imagen Descubierta</label>
+        <img class="h-96 w-96" v-if="descImgSrc" :src="descImgSrc" alt="Imagen Descifrada">
+      </div>
+      
     </div>
 
   </div>
